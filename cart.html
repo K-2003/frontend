@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Munchies - Authentic Bangladeshi Cuisine</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <i class="fas fa-utensils" style="color:#d35400; margin-right:8px;"></i>
+        <h1 style="display:inline;">Munchies</h1>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li> 
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="order.html">Order</a></li>
+          <li><a href="login.html">Login</a></li> 
+          <li><a href="cart.html" class="cart-link">
+              <i class="fas fa-shopping-cart"></i>
+              <span id="cart-count" style="background:#d35400; color:#fff; border-radius:50%; padding:2px 6px; font-size:12px; vertical-align:top; margin-left:5px;">0</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main style="padding: 20px;">
+    <h1>Your Cart</h1>
+    <a href="menu.html" style="text-decoration: none; color: #d35400;">← Back to Menu</a>
+  
+    <div id="cart-items" style="margin-top: 20px;"></div>
+    <h2 id="total" style="margin-top: 20px;"></h2>
+  </main>
+  
+  <script>
+    const cartContainer = document.getElementById('cart-items');
+    const totalElement = document.getElementById('total');
+  
+    function renderCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) {
+        cartContainer.innerHTML = '<p>Your cart is empty.</p>';
+        totalElement.textContent = '';
+        updateCartCount();
+        return;
+      }
+      
+      let total = 0;
+      cartContainer.innerHTML = cart.map((item, index) => {
+        total += item.price * (item.quantity || 1);
+        return `
+          <div style="margin-bottom: 10px;">
+            <strong>${item.name}</strong> - ৳${item.price} x ${item.quantity || 1}
+            <button onclick="removeFromCart(${index})" style="margin-left:10px; color:red;">Remove</button>
+          </div>
+        `;
+      }).join('');
+      
+      totalElement.textContent = `Total: ৳${total.toFixed(2)}`;
+      updateCartCount();
+    }
+  
+    function removeFromCart(index) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+  
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const count = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
+      const cartCountElem = document.getElementById('cart-count');
+      if (cartCountElem) {
+        cartCountElem.textContent = count;
+        cartCountElem.style.display = count > 0 ? 'inline-block' : 'none';
+      }
+    }
+  
+    renderCart();
+  </script>
+  
+  
+    <footer class="new-footer">
+      <div class="footer-content">
+          <div class="footer-section">
+              <h3>Information</h3>
+              <ul>
+                  <li><a href="about.html">About Us</a></li>
+                  <li><a href="testimonial.html">Testimonials</a></li>
+                  <li><a href="events.html">Events</a></li>
+              </ul>
+          </div>
+          <div class="footer-section">
+              <h3>Helpful Links</h3>
+              <ul>
+                  <li><a href="services.html">Services</a></li>
+                  <li><a href="support.html">Supports</a></li>
+                  <li><a href="terms.html">Terms & Condition</a></li>
+                  <li><a href="privacy.html">Privacy Policy</a></li>
+              </ul>
+          </div>
+          <div class="footer-section">
+              <h3>Our Services</h3>
+              <ul>
+                  <li><a href="brands.html">Brands list</a></li>
+                  <li><a href="order.html">Order</a></li>
+                  <li><a href="return-exchange.html">Return & Exchange</a></li>
+                  <li><a href="fashion.html">Fashion list</a></li>
+                  <li><a href="blog.html">Blog</a></li>
+              </ul>
+          </div>
+          <div class="footer-section">
+              <h3>Contact Us</h3>
+              <ul>
+                  <li><i class="fas fa-phone"></i> +91 9999 999 999</li>
+                  <li><i class="fas fa-envelope"></i> yourmail@mail.com</li>
+                  <div class="social-icons">
+                      <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+                      <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                      <a href="https://x.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+                      <a href="https://www.pinterest.com/" target="_blank"><i class="fab fa-pinterest"></i></a>
+                  </div>
+              </ul>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <div class="container">
+              <p>&copy; 2024 Munchies. All Rights Reserved.</p>
+              <div class="footer-links">
+                  <a href="faq.html">FAQ</a>
+                  <a href="privacy.html">Privacy</a>
+                  <a href="terms.html">Terms & Condition</a>
+              </div>
+          </div>
+      </div>
+  </footer>
+  </main>
+
+
+</html>
+
