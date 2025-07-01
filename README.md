@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# Munchies Restaurant Website
+
 
 A modern, responsive website for Munchies Restaurant built using HTML, CSS, JavaScript, and Flask.
 
